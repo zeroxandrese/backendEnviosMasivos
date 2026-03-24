@@ -23,6 +23,7 @@ const server = app.listen(PORT, "0.0.0.0", async () => {
     logger.info(`Server started on port: ${process.env.PORT}`);
   } catch (error) {
     logger.error("Error starting server:", error);
+    console.error("STACK 💥", error?.stack);
   }
 });
 
@@ -43,7 +44,6 @@ process.on("unhandledRejection", (reason, p) => {
   );
   process.exit(1);
 });
-
 
 initIO(server);
 gracefulShutdown(server);
