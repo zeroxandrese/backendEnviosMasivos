@@ -1,6 +1,6 @@
 import "../bootstrap";
 
-module.exports = {
+/* module.exports = {
   define: {
     charset: "utf8mb4",
     collate: "utf8mb4_bin"
@@ -13,4 +13,20 @@ module.exports = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   logging: process.env.DB_DEBUG === "true"
+}; */
+
+module.exports = {
+  define: {
+    charset: "utf8mb4",
+    collate: "utf8mb4_bin"
+  },
+  dialect: "postgres",
+  url: process.env.DATABASE_URL,
+  logging: process.env.DB_DEBUG === "true",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
 };
