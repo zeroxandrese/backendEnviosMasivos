@@ -1,7 +1,7 @@
 // seedUser.ts
 import { hash } from "bcryptjs";
-import sequelize from "../database"; // tu instancia Sequelize
-import User from "../models/User";
+import sequelize from "../../database";
+import User from "../../models/User";
 
 async function seedAdminUser() {
   try {
