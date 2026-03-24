@@ -16,12 +16,12 @@ import "../bootstrap";
 }; */
 
 module.exports = {
+  use_env_variable: "DATABASE_URL",
+  dialect: "postgres",
   define: {
     charset: "utf8mb4",
     collate: "utf8mb4_bin"
   },
-  dialect: "postgres",
-  url: process.env.DATABASE_URL,
   logging: process.env.DB_DEBUG === "true",
   dialectOptions: {
     ssl: {
