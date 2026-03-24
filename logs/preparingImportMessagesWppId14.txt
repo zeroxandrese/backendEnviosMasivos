@@ -1,0 +1,7 @@
+Aguardando conexão para iniciar a importação de mensagens:
+  Whatsapp nome: Gellorie Reclutamiento
+  Whatsapp Id: 14
+  Criação do arquivo de logs: 18/03/2026 23:30:49
+  Selecionado Data de inicio de importação: 17/03/2026 14:57:00
+  Selecionado Data final da importação: 18/03/2026 14:56:00
+   

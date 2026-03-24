@@ -1,0 +1,7 @@
+Aguardando conexão para iniciar a importação de mensagens:
+  Whatsapp nome: Vania Reclutamiento
+  Whatsapp Id: 9
+  Criação do arquivo de logs: 24/03/2026 13:34:28
+  Selecionado Data de inicio de importação: 17/03/2026 14:46:00
+  Selecionado Data final da importação: 18/03/2026 14:45:00
+   

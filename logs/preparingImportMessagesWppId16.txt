@@ -1,0 +1,7 @@
+Aguardando conexão para iniciar a importação de mensagens:
+  Whatsapp nome: Heidy Reclutamiento
+  Whatsapp Id: 16
+  Criação do arquivo de logs: 19/03/2026 17:36:11
+  Selecionado Data de inicio de importação: 18/03/2026 10:39:00
+  Selecionado Data final da importação: 19/03/2026 10:38:00
+   
