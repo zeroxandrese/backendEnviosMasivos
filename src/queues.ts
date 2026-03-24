@@ -39,7 +39,7 @@ import { addSeconds, differenceInSeconds } from "date-fns";
 const nodemailer = require('nodemailer');
 const CronJob = require('cron').CronJob;
 
-const connection = process.env.REDIS_URI || "";
+const connection = process.env.REDIS_URL || process.env.REDIS_URI || "";
 const limiterMax = process.env.REDIS_OPT_LIMITER_MAX || 1;
 const limiterDuration = process.env.REDIS_OPT_LIMITER_DURATION || 3000;
 
@@ -827,8 +827,9 @@ async function handleRandomUser() {
       where: {
         status: "pending",
         queueId: {
-          [Op.ne]: null, // queueId is not null
-          [Op.ne]: 0,    // queueId is not 0
+/*           [Op.ne]: null, // queueId is not null
+          [Op.ne]: 0,    // queueId is not 0 */
+          [Op.notIn]: [null, 0],
         },
         "$queue.ativarRoteador$": true, // Join the related Queue model and check ativarRoteador is true
         "$queue.tempoRoteador$": {
