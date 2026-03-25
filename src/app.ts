@@ -19,7 +19,12 @@ app.set("queues", {
   sendScheduledMessages
 });
 
-const allowedOrigins = ["http://localhost:3000", "http://192.168.1.7:3000", "https://pps.whatsapp.net/",process.env.FRONTEND_URL];
+const allowedOrigins = ["http://localhost:3000",
+  "http://192.168.1.7:3000", 
+  "https://pps.whatsapp.net/",
+  "https://frontend-enviosmasivos.onrender.com",
+  process.env.FRONTEND_URL,
+];
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin;
