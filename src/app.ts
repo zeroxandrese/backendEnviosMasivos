@@ -49,7 +49,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://frontend-enviosmasivos.onrender.com"
+    "https://frontend-envios-masivos.vercel.app"
   ],
   credentials: true
 }));
