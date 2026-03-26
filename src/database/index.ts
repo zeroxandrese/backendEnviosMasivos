@@ -97,4 +97,18 @@ const models = [
 
 sequelize.addModels(models);
 
+let isHeartbeatRunning = false;
+
+if (!isHeartbeatRunning) {
+  isHeartbeatRunning = true;
+
+  setInterval(async () => {
+    try {
+      await sequelize.query("SELECT 1"); // ping a la DB
+    } catch (err) {
+      console.error("Error Heartbeat DB:", err);
+    }
+  }, 60000);
+}
+
 export default sequelize;
