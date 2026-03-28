@@ -548,8 +548,14 @@ async function handlePrepareContact(job) {
           contactListItemId: contactId
         },
         {
-          delay
-        }
+          delay,
+          attempts: 5,
+          backoff: {
+            type: "exponential",
+            delay: 5000
+        },
+        removeOnFail: false
+      }
       );
 
       await record.update({ jobId: nextJob.id });
@@ -570,18 +576,18 @@ async function handleDispatchCampaign(job) {
     const wbot = await GetWhatsappWbot(campaign.whatsapp);
 
     if (!wbot) {
-      logger.error(`campaignQueue -> DispatchCampaign -> error: wbot not found`);
-      return;
+      throw new Error(`campaignQueue -> DispatchCampaign -> error: wbot not found`);
+      //return;
     }
 
     if (!campaign.whatsapp) {
-      logger.error(`campaignQueue -> DispatchCampaign -> error: whatsapp not found`);
-      return;
+      throw new Error(`campaignQueue -> DispatchCampaign -> error: whatsapp not found`);
+      //return;
     }
 
     if (!wbot?.user?.id) {
-      logger.error(`campaignQueue -> DispatchCampaign -> error: wbot user not found`);
-      return;
+      throw new Error(`campaignQueue -> DispatchCampaign -> error: wbot user not found`);
+      //return;
     }
 
     logger.info(
@@ -633,8 +639,10 @@ async function handleDispatchCampaign(job) {
     );
   } catch (err: any) {
     //Sentry.captureException(err);
-    logger.error(err.message);
+    logger.error("DispatchCampaign error:", err.message);
     console.log(err.stack);
+
+    throw err;
   }
 }
 

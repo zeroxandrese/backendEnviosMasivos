@@ -6,48 +6,32 @@ import { StartAllWhatsAppsSessions } from "./services/WbotServices/StartAllWhats
 import Company from "./models/Company";
 import { startQueueProcess } from "./queues";
 
-const PORT = Number(process.env.PORT);
+const PORT = Number(process.env.PORT) || 3000;
 
-if (!PORT) {
-  throw new Error("❌ PORT no está definido. Render debe proveerlo.");
-}
-
-const server = app.listen(PORT, "0.0.0.0", () => {
-  logger.info(`🚀 Server UP on port: ${PORT}`);
-});
-
-
-initIO(server);
-gracefulShutdown(server);
-
-console.log("PORT:", process.env.PORT);
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
-console.log("REDIS_URI:", process.env.REDIS_URI);
-
-(async () => {
+const server = app.listen(PORT, "0.0.0.0", async () => {
   try {
-    logger.info("🔄 Starting async services...");
-
     const companies = await Company.findAll();
 
-    await Promise.all(
-      companies.map(c => StartAllWhatsAppsSessions(c.id))
-    );
+    companies.forEach(c => {
+      StartAllWhatsAppsSessions(c.id);
+    });
 
     await startQueueProcess();
 
-    logger.info("✅ Background services started");
-  } catch (error: any) {
-    logger.error("❌ Startup error:", error);
-    console.error("STACK 💥", error?.stack);
-
+    logger.info(`Server started on port: ${process.env.PORT}`);
+  } catch (error) {
+    logger.error("Error starting server:", error);
   }
-})();
+});
 
 process.on("uncaughtException", err => {
   console.error(`${new Date().toUTCString()} uncaughtException:`, err.message);
   console.error(err.stack);
+  //process.exit(1);
 });
+
+console.log("DB_NAME:", process.env.DB_NAME);
+console.log("DB_HOST:", process.env.DB_HOST);
 
 process.on("unhandledRejection", (reason, p) => {
   console.error(
@@ -55,4 +39,9 @@ process.on("unhandledRejection", (reason, p) => {
     reason,
     p
   );
+  //process.exit(1);
 });
+
+
+initIO(server);
+gracefulShutdown(server);

@@ -19,11 +19,8 @@ app.set("queues", {
   sendScheduledMessages
 });
 
-/*  const allowedOrigins = ["http://localhost:3000",
-  "https://pps.whatsapp.net/",
-  "https://frontend-enviosmasivos.onrender.com",
-  process.env.FRONTEND_URL,
-]; 
+const allowedOrigins = ["http://localhost:3000", "http://192.168.1.7:3000",
+   "https://pps.whatsapp.net/",process.env.FRONTEND_URL,"https://frontend-envios-masivos.vercel.app/","https://frontend-enviosmasivos.onrender.com/"];
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin;
@@ -44,16 +41,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
 
   next();
-}); */
-
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://frontend-envios-masivos.vercel.app"
-  ],
-  credentials: true
-}));
-
+});
 // --------------------------------------
 
 // Middlewares

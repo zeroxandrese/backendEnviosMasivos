@@ -97,7 +97,7 @@ async function queryDialogFlow(
         };
       }
     } catch (error) {
-      Sentry.captureException(error);
+      //Sentry.captureException(error);
       logger.error(`Error handling whatsapp message: Err: ${error}`);
     }
 
@@ -130,7 +130,7 @@ async function queryDialogFlow(
         };
       }
     } catch (error) {
-      Sentry.captureException(error);
+      //Sentry.captureException(error);
       logger.error(`Error handling whatsapp message: Err: ${error}`);
     }
 

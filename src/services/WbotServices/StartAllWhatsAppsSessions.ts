@@ -8,6 +8,7 @@ export const StartAllWhatsAppsSessions = async (
 ): Promise<void> => {
   try {
     const whatsapps = await ListWhatsAppsService({ companyId });
+
     if (whatsapps.length > 0) {
       whatsapps.forEach(whatsapp => {
         if (whatsapp.channel === "whatsapp") {
@@ -27,6 +28,6 @@ export const StartAllWhatsAppsSessions = async (
     // }
 
   } catch (e) {
-    Sentry.captureException(e);
+    //Sentry.captureException(e);
   }
 };

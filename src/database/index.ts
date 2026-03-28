@@ -97,34 +97,4 @@ const models = [
 
 sequelize.addModels(models);
 
-const connectWithRetry = async (retries = 5, delay = 5000) => {
-  for (let i = 0; i < retries; i++) {
-    try {
-      await sequelize.authenticate();
-      console.log("✅ Conectado a PostgreSQL correctamente");
-      return;
-    } catch (err: any) {
-      console.error(`❌ Error conectando a PostgreSQL (intento ${i + 1}):`, err.message);
-      if (i < retries - 1) {
-        console.log(`🔁 Reintentando en ${delay / 1000}s...`);
-        await new Promise((r) => setTimeout(r, delay));
-      } else {
-        console.error("💥 No se pudo conectar a la DB después de varios intentos.");
-        process.exit(1);
-      }
-    }
-  }
-};
-
-connectWithRetry();
-
-// Heartbeat para mantener conexión viva
-setInterval(async () => {
-  try {
-    await sequelize.query("SELECT 1");
-  } catch (err) {
-    console.error("⚠️ Error Heartbeat DB:", err);
-  }
-}, 60000);
-
 export default sequelize;

@@ -466,7 +466,7 @@ export const initWASocket = async (whatsapp: Whatsapp): Promise<Session> => {
 
       })();
     } catch (error) {
-      Sentry.captureException(error);
+      //Sentry.captureException(error);
       console.log(error);
       reject(error);
     }
