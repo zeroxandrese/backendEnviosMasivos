@@ -1,3 +1,6 @@
+import { webcrypto } from 'crypto';
+(globalThis as any).crypto = webcrypto;
+
 import gracefulShutdown from "http-graceful-shutdown";
 import app from "./app";
 import { initIO } from "./libs/socket";
