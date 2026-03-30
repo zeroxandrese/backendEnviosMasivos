@@ -2849,24 +2849,31 @@ const verifyCampaignMessageAndCloseTicket = async (message: proto.IWebMessageInf
       }
     });
 
-    if (!isNull(messageRecord) || !isNil(messageRecord) || messageRecord !== null) {
-      const ticket = await Ticket.findByPk(messageRecord.ticketId);
-      await ticket.update({ status: "closed", amountUsedBotQueues: 0, amountUseOutOfHours: 0 });
+  if (messageRecord) {
+    const ticket = await Ticket.findByPk(messageRecord.ticketId);
 
-      io.to("open").emit(`company-${companyId}-ticket`, {
-        action: "delete",
+    if (!ticket) return;
+
+    await ticket.update({
+      status: "closed",
+      amountUsedBotQueues: 0,
+      amountUseOutOfHours: 0
+    });
+
+    io.to("open").emit(`company-${companyId}-ticket`, {
+      action: "delete",
+      ticket,
+      ticketId: ticket.id
+    });
+
+    io.to(ticket.status)
+      .to(ticket.id.toString())
+      .emit(`company-${companyId}-ticket`, {
+        action: "update",
         ticket,
         ticketId: ticket.id
       });
-
-      io.to(ticket.status)
-        .to(ticket.id.toString())
-        .emit(`company-${companyId}-ticket`, {
-          action: "update",
-          ticket,
-          ticketId: ticket.id
-        });
-    }
+  }
   }
 };
 
