@@ -2834,6 +2834,8 @@ const verifyCampaignMessageAndCloseTicket = async (message: proto.IWebMessageInf
   msgContact = await getContactMessage(message, wbot);
   const contact = await verifyContact(msgContact, wbot, companyId);
 
+  if (!contact || !contact.id) return;
+
   const io = getIO();
   const body = await getBodyMessage(message);
   const isCampaign = /\u200c/.test(body);
@@ -2849,7 +2851,8 @@ const verifyCampaignMessageAndCloseTicket = async (message: proto.IWebMessageInf
       }
     });
 
-  if (messageRecord) {
+   if (!messageRecord || !messageRecord.ticketId) return;
+
     const ticket = await Ticket.findByPk(messageRecord.ticketId);
 
     if (!ticket) return;
@@ -2873,7 +2876,6 @@ const verifyCampaignMessageAndCloseTicket = async (message: proto.IWebMessageInf
         ticket,
         ticketId: ticket.id
       });
-  }
   }
 };
 
